@@ -37,7 +37,7 @@ class CalibrationProjectionNode(Node):
 
     def lidar_callback(self, msg):
         # Process LiDAR data
-        # For simplicity, we're just storing the point cloud
+        # For simplicity, we're just storing the point cloud in numpy array
         self.lidar_points = point_cloud2_to_xyz_array(msg)
 
     def image_callback(self, msg):
@@ -54,7 +54,7 @@ class CalibrationProjectionNode(Node):
         if self.lidar_points is None or self.camera_image is None or self.camera_info is None:
             return
 
-        # Convert LiDAR point cloud to numpy array
+        # load LiDAR point cloud numpy array
         lidar_points = self.lidar_points
 
         # Project LiDAR points onto camera image using PinholeCameraModel

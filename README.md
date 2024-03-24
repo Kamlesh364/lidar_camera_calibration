@@ -62,6 +62,31 @@ The launch file allows you to configure the following parameters:
 
 This node subscribes to the corrected Velodyne LiDAR point cloud data and the camera image. It then projects the LiDAR data onto the camera image and publishes the resulting image with LiDAR data overlaid to a new ROS topic.
 
+#### Static Transform Publisher Node
+
+You can use the `static_transform_publisher` node to publish the calibrated LiDAR point cloud data in the camera frame. Once you have obtained the calibration parameters between the LiDAR and camera frames, you can create a static transformation between these frames and publish it using the `static_transform_publisher` node.
+
+
+1. **Obtain Calibration Parameters**: First, calibrate the LiDAR and camera systems to determine the transformation between their respective coordinate frames. This includes parameters such as translation and rotation.
+
+2. **Create Static Transformation**: Use the calibration parameters to create a static transformation between the LiDAR frame and the camera frame. This transformation defines the relationship between the two frames.
+
+3. **Publish Transformation**: Use the `static_transform_publisher` node to publish the static transformation between the LiDAR and camera frames. This makes the calibrated LiDAR point cloud data available in the camera frame within the TF system.
+
+4. **Verify**: Verify that the transformation is correctly published by visualizing the LiDAR point cloud data in the camera frame using TF tools or visualization tools like RViz.
+
+Here's an example launch file to publish the static transformation:
+
+```xml
+<launch>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="lidar_to_camera_tf" args="x y z yaw pitch roll parent_frame child_frame" />
+</launch>
+```
+
+Replace `x`, `y`, `z`, `yaw`, `pitch`, `roll`, `parent_frame`, and `child_frame` with the appropriate values for your transformation. These values should be obtained from your calibration process.
+
+By publishing the static transformation, you'll be able to access the LiDAR point cloud data in the camera frame, facilitating integration and further processing in applications such as sensor fusion, object detection, and mapping.
+
 #### Published Topics
 
 - `/projected_image`: The projected image with LiDAR data overlaid.
@@ -73,7 +98,6 @@ This node subscribes to the corrected Velodyne LiDAR point cloud data and the ca
 
 Here are the instructions for the `projection.launch.py` launch file:
 
-```markdown
 ### Projection Launch File
 
 This package also includes a launch file named `projection.launch.py` which can be used to launch the projection process. This launch file sets up the necessary nodes and parameters for projecting LiDAR data onto the camera image.

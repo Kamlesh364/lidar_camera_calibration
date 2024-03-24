@@ -11,13 +11,13 @@ from os.path import join
 def generate_launch_description():
     # Setup params for Camera-LiDAR calibration script
 
-    Launch_args = [
-        DeclareLaunchArgument('bag_files', default_value='/workspaces/isaac_ros-dev/Lab/'),
-    ]
+    # Launch_args = [
+    #     DeclareLaunchArgument('bag_files', default_value='/workspaces/isaac_ros-dev/Lab/'),
+    # ]
 
-    bag_files = LaunchConfiguration('bag_files')
+    # bag_files = LaunchConfiguration('bag_files')
 
-    rosbag_p1 = ExecuteProcess(cmd=['ros2', 'bag', 'play', bag_files], output='screen', log_cmd=False)
+    # rosbag_p1 = ExecuteProcess(cmd=['ros2', 'bag', 'play', bag_files], output='screen', log_cmd=False)
 
     image_proc = Node(
         package='image_proc',
@@ -42,10 +42,10 @@ def generate_launch_description():
     )
 
     final_launch_description = LaunchDescription([
-        *Launch_args,
+        # *Launch_args,
         velodyne_launch,
         zed_launch,
-        rosbag_p1,
+        # rosbag_p1,
         image_proc,
         calibration_node
     ])

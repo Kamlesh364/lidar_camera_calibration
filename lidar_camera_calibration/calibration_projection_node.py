@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2, Image, CameraInfo
@@ -14,25 +16,29 @@ class CalibrationProjectionNode(Node):
             PointCloud2,
             '/velodyne_points',
             self.lidar_callback,
-            10)
+            10
+        )
         self.subscription_image = self.create_subscription(
             Image,
             '/zed/zed_node/rgb/image_rect_color',
             self.image_callback,
-            10)
+            10
+        )
         self.subscription_camera_info = self.create_subscription(
             CameraInfo,
             '/zed/zed_node/rgb/camera_info',
             self.camera_info_callback,
-            10)
+            10
+        )
         self.publisher_projected_image = self.create_publisher(
             Image,
             '/fused_image',
-            10)
+            10
+        )
         self.bridge = CvBridge()
         self.lidar_points = None
         self.camera_image = None
-        self.camera_info = None
+        self.camera_info  = None
         self.pinhole_camera_model = PinholeCameraModel()
 
     def lidar_callback(self, msg):
